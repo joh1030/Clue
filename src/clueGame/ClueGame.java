@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ClueGame {
+	private Solution solution;
 	private Board board;
 	private int boardRows;
 	private int boardCols;
