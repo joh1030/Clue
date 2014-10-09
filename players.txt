@@ -1,0 +1,6 @@
+Miss Scarlett black 0 4
+Colonel Mustard blue 21 6
+Mrs. White cyan 14 20
+Mr. Green green 8 15
+Mrs. Peacock magenta 5 17
+Professor Plum orange 4 0
