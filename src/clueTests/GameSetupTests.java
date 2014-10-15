@@ -112,7 +112,6 @@ public class GameSetupTests {
 		Solution solutionWrong = new Solution("Jack","Knife","Hall");
 		
 		
-		
 		game.setSolution(solution);
 		//check correct solution
 		assertTrue(game.checkAccusation(solution));
