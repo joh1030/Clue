@@ -50,20 +50,37 @@ public class GameSetupTests {
 	@Test
 	public void testLoadingCards(){
 		int people = 0,weapons =0,rooms=0;
+		boolean containsPerson=false,containsWeapon=false,containsRoom=false;
 		assertEquals(21,game.getCards().size());
+		//get number of cards of each type
 		for(Card c: game.getCards()){
 			if(c.getCardType() == Card.CardType.PERSON){
+				if(c.getName().contentEquals("Miss Scarlett")){
+					containsPerson=true;
+				}
 				people++;
 			}
 			if(c.getCardType() == Card.CardType.WEAPON){
+				if(c.getName().contentEquals("wrench")){
+					containsWeapon=true;
+				}
 				weapons++;
 			}
 			if(c.getCardType() == Card.CardType.ROOM){
+				if(c.getName().contentEquals("Bedroom")){
+					containsRoom=true;
+				}
 				rooms++;
 			}
+			
+			
 		}
 		assertEquals(6,people);
 		assertEquals(9,rooms);
 		assertEquals(6, weapons);
+		
+		assertEquals(true,containsRoom && containsWeapon && containsPerson);
+		
+		
 	}
 }
