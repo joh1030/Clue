@@ -32,6 +32,11 @@ public class Player {
 		this.row = row;
 		this.col = col;
 	}
+	
+	public void addCard(Card card){
+		System.out.println(card.getName());
+		//myCards.add(card);
+	}
 
 	public ArrayList<Card> getMyCards() {
 		return myCards;

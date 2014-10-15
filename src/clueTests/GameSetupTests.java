@@ -83,4 +83,10 @@ public class GameSetupTests {
 		
 		
 	}
+	
+	@Test
+	public void testDealingCards(){
+		game.deal();
+		assertEquals(0,game.getCards().size());
+	}
 }

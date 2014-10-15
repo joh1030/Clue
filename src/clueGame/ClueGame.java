@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Scanner;
 
 public class ClueGame {
 	private ArrayList<Card> cards = new ArrayList<Card>();
+	private ArrayList<Card> peopleCards = new ArrayList<Card>();
+	private ArrayList<Card> weaponCards = new ArrayList<Card>();
+	private ArrayList<Card> roomCards = new ArrayList<Card>();
 	private ArrayList<Player> players;
 	private Solution solution;
 	private Board board;
@@ -65,8 +69,10 @@ public class ClueGame {
 
 	private void loadRoomCards() {
 		for(Entry<Character, String> entry : board.getRooms().entrySet()){
-			if(!entry.getValue().equals("Walkway") && !entry.getValue().equals("Closet") && !entry.getValue().equals("Hallway"))
+			if(!entry.getValue().equals("Walkway") && !entry.getValue().equals("Closet") && !entry.getValue().equals("Hallway")){
+				roomCards.add(new Card(entry.getValue(),Card.CardType.ROOM));
 				cards.add(new Card(entry.getValue(),Card.CardType.ROOM));
+			}
 		}
 
 	}
@@ -85,6 +91,7 @@ public class ClueGame {
 			color = scan.next();
 			row = scan.nextInt();
 			col = scan.nextInt();
+			peopleCards.add(new Card(firstName+" "+lastName,Card.CardType.PERSON));
 			cards.add(new Card(firstName+" "+lastName,Card.CardType.PERSON));
 			if(isHuman){
 				players.add(new HumanPlayer(firstName +" " + lastName, color, row, col));
@@ -101,6 +108,7 @@ public class ClueGame {
 		String weaponName;
 		while (scan.hasNext()) {
 			weaponName = scan.next();
+			weaponCards.add(new Card(weaponName,Card.CardType.WEAPON));
 			cards.add(new Card(weaponName,Card.CardType.WEAPON));
 		}
 	}
@@ -114,5 +122,39 @@ public class ClueGame {
 	}
 	public ArrayList<Card> getCards(){
 		return cards;
+	}
+	public void selectAnswer(){
+		Card person,weapon,room;
+		Random rand = new Random();
+		int  n = rand.nextInt(peopleCards.size());
+		person=peopleCards.get(n);
+		cards.remove(person);
+
+		n = rand.nextInt(weaponCards.size());
+		weapon=weaponCards.get(n);
+		cards.remove(weapon);
+
+		n = rand.nextInt(roomCards.size());
+		room=roomCards.get(n);
+		cards.remove(room);
+		solution = new Solution(person.getName(),weapon.getName(),room.getName());
+	}
+
+	public void deal(){
+		while(!cards.isEmpty()){
+			for(Player p: players){
+				System.out.println(p.getName());
+				System.out.println(cards);
+				if(!cards.isEmpty()){
+					
+					Random rand = new Random();
+					int  n = rand.nextInt(cards.size());
+					System.out.println(n);
+					Card card = cards.get(n);
+					p.addCard(card);
+					cards.remove(card);
+				}
+			}
+		}
 	}
 }
