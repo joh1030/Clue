@@ -57,18 +57,21 @@ public class GameSetupTests {
 		//get number of cards of each type
 		for(Card c: game.getCards()){
 			if(c.getCardType() == Card.CardType.PERSON){
+				//check if miss scarlett exists and is person
 				if(c.getName().contentEquals("Miss Scarlett")){
 					containsPerson=true;
 				}
 				people++;
 			}
 			if(c.getCardType() == Card.CardType.WEAPON){
+				//check if wrench exists and is weapon
 				if(c.getName().contentEquals("wrench")){
 					containsWeapon=true;
 				}
 				weapons++;
 			}
 			if(c.getCardType() == Card.CardType.ROOM){
+				//check that bedroom exists and is room
 				if(c.getName().contentEquals("Bedroom")){
 					containsRoom=true;
 				}
@@ -77,6 +80,7 @@ public class GameSetupTests {
 			
 			
 		}
+		//check there are the correct number of card types
 		assertEquals(6,people);
 		assertEquals(9,rooms);
 		assertEquals(6, weapons);
@@ -89,6 +93,7 @@ public class GameSetupTests {
 	@Test
 	public void testDealingCards(){
 		game.deal();
+		//check to make sure all cards have been dealt
 		assertEquals(0,game.getCards().size());
 		for(Player p1: game.getPlayers()){
 			//test to make sure each player receives correct number of cards
@@ -105,6 +110,7 @@ public class GameSetupTests {
 	}
 	@Test
 	public void testAccusation(){
+		//setup our solutions
 		Solution solution = new Solution("John","Wrench","Bathroom");
 		Solution solutionWrongWeapon = new Solution("John","Knife","Bathroom");
 		Solution solutionWrongPerson = new Solution("Jack","Wrench","Bathroom");
