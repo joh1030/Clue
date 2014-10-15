@@ -59,10 +59,16 @@ public class Player {
 	}
 	
 	public Card disproveSuggestion(String person, String weapon, String room) {
+		ArrayList<Card> tempCards = new ArrayList<Card>();
 		for(Card c: myCards){
 			if(c.getName().equalsIgnoreCase(person)||c.getName().equalsIgnoreCase(weapon)||c.getName().equalsIgnoreCase(room)){
-				return c;
+				tempCards.add(c);
 			}
+		}
+		if(!tempCards.isEmpty()){
+			Random rand = new Random();
+			int  n = rand.nextInt(tempCards.size());
+			return tempCards.get(n);
 		}
 		return null;
 	}
