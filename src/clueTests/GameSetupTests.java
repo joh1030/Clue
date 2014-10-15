@@ -19,7 +19,7 @@ public class GameSetupTests {
 	
 	@BeforeClass
 	public static void setUp() throws FileNotFoundException, BadConfigFormatException {
-		game = new ClueGame("ClueLayout.csv","ClueLegend.csv");
+		game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
 	}
@@ -44,5 +44,10 @@ public class GameSetupTests {
 		assertEquals(14, game.getPlayers().get(2).getRow());
 		assertEquals(20, game.getPlayers().get(2).getCol());
 
+	}
+	
+	@Test
+	public void testLoadingCards(){
+		assertEquals(21,game.getCards().size());
 	}
 }
