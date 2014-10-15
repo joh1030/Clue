@@ -1,5 +1,8 @@
 package clueTests;
 
+import static org.junit.Assert.*;
+
+import java.awt.Color;
 import java.io.FileNotFoundException;
 
 import org.junit.BeforeClass;
@@ -23,7 +26,10 @@ public class GameSetupTests {
 	
 	@Test
 	public void testLoadingPlayers() throws FileNotFoundException {
-		game.loadPlayers("players.txt");
+		// test first line
+		assertEquals("Miss"+"Scarlett", game.getPlayers().get(0).getName());
+		assertEquals(Color.black, game.getPlayers().get(0).getColor());
+		assertEquals(0, game.getPlayers().get(0).getRow());
+		assertEquals(4, game.getPlayers().get(0).getCol());
 	}
-	
 }

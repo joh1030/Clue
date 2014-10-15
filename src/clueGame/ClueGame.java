@@ -37,16 +37,15 @@ public class ClueGame {
 		//then load board layout
 		board.loadBoardDimensions(layoutFile);
 		board.loadBoardConfig(layoutFile);
-		//loadPlayers("players.txt");
-		//loadWeapons("weapons.txt");
-		
+		loadPlayers("players.txt");
+		loadWeapons("weapons.txt");	
 	}
 	
 	public void loadPlayers(String playerFile) throws FileNotFoundException {
+		players = new ArrayList<Player>();
 		FileReader reader = new FileReader(playerFile);
 		Scanner scan = new Scanner(reader);
-		String firstName, lastName;
-		String color;
+		String firstName, lastName, color;
 		int row, col;
 		while (scan.hasNext()) {
 			firstName = scan.next();
@@ -65,6 +64,10 @@ public class ClueGame {
 		while (scan.hasNext()) {
 			weaponName = scan.next();
 		}
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
 	}
 	
 	public Board getBoard() {
