@@ -21,12 +21,12 @@ public class Board {
 	private Set<BoardCell> visited = new HashSet<BoardCell>();
 	private LinkedList<BoardCell> path = new LinkedList<BoardCell>();
 	private BoardCell startingPoint  = null;
-	
+
 	public Board(String layoutFile) throws FileNotFoundException, BadConfigFormatException {
 		loadBoardDimensions(layoutFile);
 		layout = new BoardCell[numRows][numColumns];
 	}
-	
+
 	public void loadBoardDimensions(String layoutFile) throws BadConfigFormatException, FileNotFoundException {
 		FileReader reader = new FileReader(layoutFile);
 		Scanner scan = new Scanner(reader);
@@ -47,72 +47,72 @@ public class Board {
 				/*String[] tempLine2 = temp.split(",");
 				cellCount2 = tempLine2.length;
 				if (cellCount2 != cellCount) throw new BadConfigFormatException();*/
-		}
+			}
 		}
 		numRows = lineCount;
 		numColumns = cellCount;
 		// System.out.println("loaded board as rows: " + numRows + " & columns: " + numColumns);
 	}
-	
+
 	public void loadBoardConfig(String layoutFile) throws BadConfigFormatException, FileNotFoundException {
-			//load board layout
-			String walkWayChar = "h";
-			if( layoutFile.contains("Rader") ) walkWayChar = "w";
-			
-			FileReader reader = new FileReader(layoutFile);
-			Scanner scan = new Scanner(reader);
-			String temp;
-			Character tempDir;
-			boolean roomMade = false;
-			//first read line by line and split by ,'s
-			temp = scan.nextLine();
-			if(temp.length() < (numColumns*2 - 1)) throw new BadConfigFormatException();
-			if(layoutFile.contains("Rader") && numColumns != 23) throw new BadConfigFormatException();
-			if(!layoutFile.contains("Rader") && numColumns != 25) throw new BadConfigFormatException();
-			
-			String[] firstTempLine = temp.split(",");
-			for( int i = 0; i < numRows; i++ ) {
-				String[] tempLine = temp.split(",");
-				if (firstTempLine.length != tempLine.length) throw new BadConfigFormatException();
-				//System.out.println("__________________row line __________________");
-				for( int j = 0; j < tempLine.length; j++ ) {
-					roomMade = false;
-					//next check if this is a doorway in a room and handle
-					if(!rooms.containsKey(tempLine[j].charAt(0))) throw new BadConfigFormatException();
-					if( tempLine[j].length() > 1 ) {
-						if( tempLine[j].charAt(1) == 'U' || tempLine[j].charAt(1) == 'D' || 
+		//load board layout
+		String walkWayChar = "h";
+		if( layoutFile.contains("Rader") ) 
+			walkWayChar = "w";
+		FileReader reader = new FileReader(layoutFile);
+		Scanner scan = new Scanner(reader);
+		String temp;
+		Character tempDir;
+		boolean roomMade = false;
+		//first read line by line and split by ,'s
+		temp = scan.nextLine();
+		if(temp.length() < (numColumns*2 - 1)) throw new BadConfigFormatException();
+		if(layoutFile.contains("Rader") && numColumns != 23) throw new BadConfigFormatException();
+		if(!layoutFile.contains("Rader") && numColumns != 25) throw new BadConfigFormatException();
+
+		String[] firstTempLine = temp.split(",");
+		for( int i = 0; i < numRows; i++ ) {
+			String[] tempLine = temp.split(",");
+			if (firstTempLine.length != tempLine.length) throw new BadConfigFormatException();
+			//System.out.println("__________________row line __________________");
+			for( int j = 0; j < tempLine.length; j++ ) {
+				roomMade = false;
+				//next check if this is a doorway in a room and handle
+				if(!rooms.containsKey(tempLine[j].charAt(0))) throw new BadConfigFormatException();
+				if( tempLine[j].length() > 1 ) {
+					if( tempLine[j].charAt(1) == 'U' || tempLine[j].charAt(1) == 'D' || 
 							tempLine[j].charAt(1) == 'L' || tempLine[j].charAt(1) == 'R' ) {
-							tempDir = tempLine[j].charAt(1);
-							layout[i][j] = new RoomCell(i, j, tempLine[j].charAt(0), tempDir);
-							//System.out.println("doorway" + layout[i][j].toString());
-							roomMade = true;
-						}
-					}
-				
-					//if it is a walkway/hallway...
-					if( tempLine[j].equalsIgnoreCase(walkWayChar) ) {
-						
-						layout[i][j] = new WalkwayCell(i, j);
-						//System.out.println("walkway" + layout[i][j].toString());
+						tempDir = tempLine[j].charAt(1);
+						layout[i][j] = new RoomCell(i, j, tempLine[j].charAt(0), tempDir);
+						//System.out.println("doorway" + layout[i][j].toString());
 						roomMade = true;
 					}
-					
-					//if not these, it must be a room without a doorway (or closet)
-					if( !roomMade ) {
-						//System.out.println("else: " + tempLine[j].charAt(0));
-						layout[i][j] = new RoomCell(i, j, tempLine[j].charAt(0));
-						//System.out.println("room" + layout[i][j].toString());
-					}
 				}
-				//read next line if it's allowed
-				if( scan.hasNextLine() ) {
-					temp = scan.nextLine();
+
+				//if it is a walkway/hallway...
+				if( tempLine[j].equalsIgnoreCase(walkWayChar) ) {
+
+					layout[i][j] = new WalkwayCell(i, j);
+					//System.out.println("walkway" + layout[i][j].toString());
+					roomMade = true;
+				}
+
+				//if not these, it must be a room without a doorway (or closet)
+				if( !roomMade ) {
+					//System.out.println("else: " + tempLine[j].charAt(0));
+					layout[i][j] = new RoomCell(i, j, tempLine[j].charAt(0));
+					//System.out.println("room" + layout[i][j].toString());
 				}
 			}
-			
-			scan.close();
+			//read next line if it's allowed
+			if( scan.hasNextLine() ) {
+				temp = scan.nextLine();
+			}
+		}
+
+		scan.close();
 	}
-	
+
 	public void loadLegend(String legendFile) throws FileNotFoundException, BadConfigFormatException {
 		//setup filereader and scanner
 		FileReader reader = new FileReader(legendFile);
@@ -130,11 +130,11 @@ public class Board {
 			rooms.put(tempLine[0].charAt(0), tempLine[1].trim());
 			//System.out.println("adding: " + tempLine[0].charAt(0) + " + " + tempLine[1]);
 			//System.out.println("added: " + tempLine[0] + "|" + rooms.get(tempLine[0].charAt(0)));
-			
+
 		}
 		scan.close();
 	}
-	
+
 	public void calcAdjacencies() {
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numColumns; j++) {
@@ -157,13 +157,13 @@ public class Board {
 					if (j!=numColumns-1) if(getRoomCell(i, j).getDoorDirection() == DoorDirection.RIGHT) adjacents.add(getBoardCell(i,j+1));
 					if (i!=0) if(getRoomCell(i, j).getDoorDirection() == DoorDirection.UP) adjacents.add(getBoardCell(i-1,j));
 					if (j!=0) if(getRoomCell(i, j).getDoorDirection() == DoorDirection.LEFT) adjacents.add(getBoardCell(i,j-1));
-					
+
 					adjLists.put(getBoardCell(i,j), adjacents);
 				}
 			}
 		}
 	}
-	
+
 	public void calcTargets(BoardCell cell, int diceRoll) {
 		startingPoint = cell;
 		visited.clear();
@@ -171,7 +171,7 @@ public class Board {
 		targets.clear();
 		findAllTargets(cell, diceRoll);
 	}
-	
+
 	public void calcTargets(int i, int j, int diceRoll) {
 		startingPoint = getBoardCell(i, j);
 		visited.clear();
@@ -179,7 +179,7 @@ public class Board {
 		targets.clear();
 		findAllTargets(startingPoint, diceRoll);
 	}
-	
+
 	public void findAllTargets(BoardCell cell, int diceRoll) {
 		LinkedList<BoardCell> temp = getAdjList(cell);
 		LinkedList<BoardCell> notYetVisited = new LinkedList<BoardCell>();
@@ -190,7 +190,7 @@ public class Board {
 			if(adj.isDoorway() && !targets.contains(adj)) targets.add(adj);
 			// System.out.println("Targets: " + targets.toString());
 		}
-		
+
 		for(BoardCell adj : notYetVisited) {
 			visited.add(adj);
 			// System.out.println("Visited: " + visited.toString());
@@ -200,7 +200,7 @@ public class Board {
 			}
 			else {
 				findAllTargets(adj,diceRoll-1);				
-		}
+			}
 			visited.remove(adj);
 		}
 	}
@@ -208,35 +208,35 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		targets.remove(startingPoint);
 		return targets;
-		
+
 	}
-	
+
 	public LinkedList<BoardCell> getAdjList(BoardCell cell) {
 		return adjLists.get(cell);
 	}
-	
+
 	public LinkedList<BoardCell> getAdjList(int i, int j) {
 		return adjLists.get(getBoardCell(i, j));
 	}
-	
-	
+
+
 	public BoardCell getBoardCell(int row, int col) {
 		return layout[row][col];
 	}
-	
-	
+
+
 	public int getNumRows() {
 		return numRows;
 	}
-	
+
 	public int getNumColumns() {
 		return numColumns;
 	}
-	
+
 	public Map<Character,String> getRooms() {
 		return rooms;
 	}
-	
+
 	public RoomCell getRoomCell(int row, int col) {
 		return (RoomCell) layout[row][col];
 	}

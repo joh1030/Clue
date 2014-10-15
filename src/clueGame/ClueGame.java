@@ -15,9 +15,8 @@ public class ClueGame {
 	private Board board;
 	private int boardRows;
 	private int boardCols;
-	private String layoutFile = "ClueLayout.csv";
-	private String legendFile = "ClueLegend.csv";
-	private String playerFile = "player.txt";
+	private String layoutFile;
+	private String legendFile;
 	private Map<Character,String> rooms = new HashMap<Character,String>();
 	public ClueGame(String layout, String legend) {
 		layoutFile = layout;
@@ -31,7 +30,6 @@ public class ClueGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {
@@ -39,7 +37,8 @@ public class ClueGame {
 		//then load board layout
 		board.loadBoardDimensions(layoutFile);
 		board.loadBoardConfig(layoutFile);
-		loadPlayers(playerFile);
+		//loadPlayers("players.txt");
+		//loadWeapons("weapons.txt");
 		
 	}
 	

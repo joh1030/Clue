@@ -22,7 +22,7 @@ public class GameSetupTests {
 	}
 	
 	@Test
-	public void testLoadingPlayers() {
+	public void testLoadingPlayers() throws FileNotFoundException {
 		game.loadPlayers("players.txt");
 	}
 	
