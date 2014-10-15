@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import clueGame.BadConfigFormatException;
 import clueGame.Board;
+import clueGame.Card;
 import clueGame.ClueGame;
 
 public class GameSetupTests {
@@ -48,6 +49,21 @@ public class GameSetupTests {
 	
 	@Test
 	public void testLoadingCards(){
+		int people = 0,weapons =0,rooms=0;
 		assertEquals(21,game.getCards().size());
+		for(Card c: game.getCards()){
+			if(c.getCardType() == Card.CardType.PERSON){
+				people++;
+			}
+			if(c.getCardType() == Card.CardType.WEAPON){
+				weapons++;
+			}
+			if(c.getCardType() == Card.CardType.ROOM){
+				rooms++;
+			}
+		}
+		assertEquals(6,people);
+		assertEquals(9,rooms);
+		assertEquals(6, weapons);
 	}
 }
