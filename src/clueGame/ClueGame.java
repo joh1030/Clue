@@ -144,7 +144,7 @@ public class ClueGame {
 		while(!cards.isEmpty()){
 			for(Player p: players){
 				if(!cards.isEmpty()){
-					
+
 					Random rand = new Random();
 					int  n = rand.nextInt(cards.size());
 					Card card = cards.get(n);
@@ -154,7 +154,7 @@ public class ClueGame {
 			}
 		}
 	}
-	
+
 	public boolean checkAccusation(Solution solutionIn){
 		if(!solutionIn.getPerson().equalsIgnoreCase(solution.getPerson()))
 			return false;
@@ -162,9 +162,26 @@ public class ClueGame {
 			return false;
 		if(!solutionIn.getRoom().equalsIgnoreCase(solution.getRoom()))
 			return false;
-		
+
 		return true;
 	}
+	public void handleSuggestion(String person,String room, String weapon, Player accusingPlayer){
+		Card tempCard = null;
+		for(Player p: players){
+			if(p!=accusingPlayer){
+				if(p.disproveSuggestion(person, weapon, room)!=null)
+					tempCard=p.disproveSuggestion(person, weapon, room);
+			}
+		}
+		if(tempCard!=null){
+			for(Player p: players){
+				if(p instanceof ComputerPlayer){
+					((ComputerPlayer) p).updateSeen(tempCard);
+				}
+			}
+		}
+	}
+
 	public void setSolution(Solution solutionIn){
 		solution = solutionIn;
 	}
