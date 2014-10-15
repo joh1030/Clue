@@ -143,18 +143,29 @@ public class ClueGame {
 	public void deal(){
 		while(!cards.isEmpty()){
 			for(Player p: players){
-				System.out.println(p.getName());
-				System.out.println(cards);
 				if(!cards.isEmpty()){
 					
 					Random rand = new Random();
 					int  n = rand.nextInt(cards.size());
-					System.out.println(n);
 					Card card = cards.get(n);
 					p.addCard(card);
 					cards.remove(card);
 				}
 			}
 		}
+	}
+	
+	public boolean checkAccusation(Solution solutionIn){
+		if(!solutionIn.getPerson().equalsIgnoreCase(solution.getPerson()))
+			return false;
+		if(!solutionIn.getWeapon().equalsIgnoreCase(solution.getWeapon()))
+			return false;
+		if(!solutionIn.getRoom().equalsIgnoreCase(solution.getRoom()))
+			return false;
+		
+		return true;
+	}
+	public void setSolution(Solution solutionIn){
+		solution = solutionIn;
 	}
 }

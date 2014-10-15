@@ -12,6 +12,8 @@ import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.ClueGame;
+import clueGame.Player;
+import clueGame.Solution;
 
 public class GameSetupTests {
 	
@@ -88,5 +90,41 @@ public class GameSetupTests {
 	public void testDealingCards(){
 		game.deal();
 		assertEquals(0,game.getCards().size());
+		for(Player p1: game.getPlayers()){
+			//test to make sure each player receives correct number of cards
+			assertEquals(3,p1.getMyCards().size(),1);
+			for(Player p2: game.getPlayers()){
+				if(p1!=p2){
+					//for every card in player 1's hand make sure it doesn't exist in player 2's hand
+					for(Card c: p1.getMyCards()){
+						assertEquals(false,p2.getMyCards().contains(c));
+					}
+				}
+			}
+		}
 	}
+	@Test
+	public void testAccusation(){
+		Solution solution = new Solution("John","Wrench","Bathroom");
+		Solution solutionWrongWeapon = new Solution("John","Knife","Bathroom");
+		Solution solutionWrongPerson = new Solution("Jack","Wrench","Bathroom");
+		Solution solutionWrongRoom = new Solution("John","Wrench","Livingroom");
+		Solution solutionWrong = new Solution("Jack","Knife","Hall");
+		
+		
+		game.setSolution(solution);
+		//check correct solution
+		assertTrue(game.checkAccusation(solution));
+		
+		//check wrong weapon
+		assertFalse(game.checkAccusation(solutionWrongWeapon));
+		//check wrong person
+		assertFalse(game.checkAccusation(solutionWrongPerson));
+		//check wrong room
+		assertFalse(game.checkAccusation(solutionWrongRoom));
+		//check wrong everything
+		assertFalse(game.checkAccusation(solutionWrong));
+		
+	}
+	
 }

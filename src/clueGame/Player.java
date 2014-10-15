@@ -21,6 +21,7 @@ public class Player {
 	
 	public Player(String name, String color, int row, int col) {
 		this.name = name;
+		this.myCards = new ArrayList<Card>();
 		// convert String color to Color color
 		try {     
 			// We can use reflection to convert the string to a color
@@ -34,8 +35,7 @@ public class Player {
 	}
 	
 	public void addCard(Card card){
-		System.out.println(card.getName());
-		//myCards.add(card);
+		myCards.add(card);
 	}
 
 	public ArrayList<Card> getMyCards() {
