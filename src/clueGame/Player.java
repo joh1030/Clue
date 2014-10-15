@@ -58,8 +58,13 @@ public class Player {
 		return col;
 	}
 	
-	/*public Card disproveSuggestion(String person, String weapon, String room) {
-		
-	}*/
+	public Card disproveSuggestion(String person, String weapon, String room) {
+		for(Card c: myCards){
+			if(c.getName().equalsIgnoreCase(person)||c.getName().equalsIgnoreCase(weapon)||c.getName().equalsIgnoreCase(room)){
+				return c;
+			}
+		}
+		return null;
+	}
 	
 }
