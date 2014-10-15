@@ -42,6 +42,8 @@ public class ClueGame {
 	}
 	
 	public void loadPlayers(String playerFile) throws FileNotFoundException {
+		
+		boolean isHuman=true;
 		players = new ArrayList<Player>();
 		FileReader reader = new FileReader(playerFile);
 		Scanner scan = new Scanner(reader);
@@ -53,7 +55,12 @@ public class ClueGame {
 			color = scan.next();
 			row = scan.nextInt();
 			col = scan.nextInt();
-			players.add(new Player(firstName + lastName, color, row, col));
+			if(isHuman){
+				players.add(new HumanPlayer(firstName +" " + lastName, color, row, col));
+			}
+			else{
+				players.add(new ComputerPlayer(firstName  +" " + lastName, color, row, col));
+			}
 		}
 	}
 	
