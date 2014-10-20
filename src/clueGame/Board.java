@@ -139,7 +139,6 @@ public class Board {
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numColumns; j++) {
 				LinkedList<BoardCell> adjacents = new LinkedList<BoardCell>();
-				System.out.println(adjacents.size());
 				//first ensure we are checking a doorway or walkway to start from
 				if( getBoardCell(i,j).isRoom()) {
 					adjLists.put(getBoardCell(i,j), adjacents);

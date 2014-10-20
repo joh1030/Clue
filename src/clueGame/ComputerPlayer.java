@@ -25,8 +25,12 @@ public class ComputerPlayer extends Player {
 		int loc = new Random().nextInt(targets.size()); 
 		int i = 0;
 		for(BoardCell cell : targets) {
-			if(cell.isDoorway()){
-				return cell;
+			if(cell instanceof RoomCell){
+				RoomCell tempCell = ((RoomCell) cell);
+				if(tempCell.isDoorway()&&lastRoomVisited!=tempCell.getInitial()){
+					lastRoomVisited=tempCell.getInitial();
+					return cell;
+				}
 			}
 		}
 		for(BoardCell cell : targets) {
@@ -63,5 +67,10 @@ public class ComputerPlayer extends Player {
 	public void updateSeen(Card seen) {
 		seenCards.add(seen);
 	}
-
+	public void setLastVisited(char initial){
+		lastRoomVisited=initial;
+	}
+	public char getLastVisited(){
+		return lastRoomVisited;
+	}
 }

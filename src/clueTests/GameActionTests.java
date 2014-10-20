@@ -67,6 +67,15 @@ public class GameActionTests {
 		board.calcTargets(12, 7, 1);
 		assertEquals(board.getBoardCell(12,6), player.pickLocation(board.getTargets()));
 	}
+	//Test that computer does not reenter last visited room
+	@Test
+	public void testLastVisited() {
+		ComputerPlayer player = new ComputerPlayer();
+		player.setLastVisited('D');
+		board.calcTargets(4, 20, 2);
+		assertNotEquals(board.getBoardCell(6,20), player.pickLocation(board.getTargets()));
+	}
+	
 	//Computer player makes a suggestion
 	@Test
 	public void testComputerSuggestion() {
@@ -81,8 +90,10 @@ public class GameActionTests {
 		assertTrue(suggestion.getPerson().equalsIgnoreCase("John")&&suggestion.getWeapon().equalsIgnoreCase("Wrench")&&suggestion.getRoom().equalsIgnoreCase("Bathroom"));
 
 		//test computer makes suggestion with more than one option
+		player.updateSeen(new Card("Jill",Card.CardType.PERSON));
 		int pickedJohn=0,pickedJack=0;
 		cards.add(new Card("Jack",Card.CardType.PERSON));
+		
 		for(int i=0; i<100;i++){
 			suggestion = player.createSuggestion("Bathroom");
 			player.setAllCards(cards);
