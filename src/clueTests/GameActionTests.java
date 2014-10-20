@@ -3,6 +3,7 @@ package clueTests;
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -10,8 +11,10 @@ import org.junit.Test;
 import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
+import clueGame.Card;
 import clueGame.ClueGame;
 import clueGame.ComputerPlayer;
+import clueGame.Suggestion;
 
 public class GameActionTests {
 
@@ -60,14 +63,39 @@ public class GameActionTests {
 		ComputerPlayer player = new ComputerPlayer();
 		board.calcTargets(4, 20, 2);
 		assertEquals(board.getBoardCell(6,20), player.pickLocation(board.getTargets()));
-		
-		board.calcTargets(12, 7, 2);
+
+		board.calcTargets(12, 7, 1);
 		assertEquals(board.getBoardCell(12,6), player.pickLocation(board.getTargets()));
 	}
 	//Computer player makes a suggestion
 	@Test
 	public void testComputerSuggestion() {
+		//test computer makes suggestion with only one option
+		ArrayList<Card> cards = new ArrayList<Card>();
+		cards.add(new Card("John",Card.CardType.PERSON));
+		cards.add(new Card("Wrench",Card.CardType.WEAPON));
+		Suggestion suggestion;
+		ComputerPlayer player = new ComputerPlayer();
+		player.setAllCards(cards);
+		suggestion = player.createSuggestion("Bathroom");
+		assertTrue(suggestion.getPerson().equalsIgnoreCase("John")&&suggestion.getWeapon().equalsIgnoreCase("Wrench")&&suggestion.getRoom().equalsIgnoreCase("Bathroom"));
+
+		//test computer makes suggestion with more than one option
+		int pickedJohn=0,pickedJack=0;
+		cards.add(new Card("Jack",Card.CardType.PERSON));
+		for(int i=0; i<100;i++){
+			suggestion = player.createSuggestion("Bathroom");
+			player.setAllCards(cards);
+			if(suggestion.getPerson().equalsIgnoreCase("John")){
+				pickedJohn++;
+			}
+			else if(suggestion.getPerson().equalsIgnoreCase("Jack")){
+				pickedJack++;
+			}
+		}
 		
-		
+		assertEquals(100,pickedJohn+pickedJack);
+		assertTrue(pickedJohn>20);
+		assertTrue(pickedJack>20);
 	}
 }

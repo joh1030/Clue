@@ -3,8 +3,8 @@ package clueGame;
 import java.util.*;
 
 public class ComputerPlayer extends Player {
-	private ArrayList<Card> seenCards;
-	private ArrayList<Card> allCards;
+	private ArrayList<Card> seenCards= new ArrayList<Card>();
+	private ArrayList<Card> allCards= new ArrayList<Card>();
 	private char lastRoomVisited;
 
 	public ComputerPlayer() {
@@ -13,7 +13,6 @@ public class ComputerPlayer extends Player {
 
 	public ComputerPlayer(String name, String color, int row, int col) {
 		super(name,color,row,col);
-		seenCards= new ArrayList<Card>();
 	}
 	@Override
 	public void addCard(Card card){

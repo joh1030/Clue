@@ -3,7 +3,6 @@ package clueGame;
 public abstract class BoardCell {
 	private int row;
 	private int column;
-	private char initial;
 	
 	@Override
 	public String toString() {
