@@ -63,6 +63,10 @@ public class GameActionTests {
 		
 		board.calcTargets(12, 7, 2);
 		assertEquals(board.getBoardCell(12,6), player.pickLocation(board.getTargets()));
+	}
+	//Computer player makes a suggestion
+	@Test
+	public void testComputerSuggestion() {
 		
 	}
 }
