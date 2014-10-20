@@ -67,6 +67,11 @@ public class ClueGame {
 		loadPlayers(playersFile);
 		loadWeapons(weaponsFile);	
 		loadRoomCards();
+		for(Player p: players){
+			if(p instanceof ComputerPlayer){
+				((ComputerPlayer) p).setAllCards(cards);
+			}
+		}
 	}
 
 	private void loadRoomCards() {
