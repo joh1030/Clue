@@ -30,6 +30,8 @@ public class ClueGame {
 	public ClueGame(String layout, String legend) {
 		layoutFile = layout;
 		legendFile = legend;
+		playersFile="players.txt";
+		weaponsFile="weapons.txt";
 		try {
 			board = new Board(layoutFile);
 		} catch (FileNotFoundException e) {

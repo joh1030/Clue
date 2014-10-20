@@ -23,6 +23,7 @@ public class GameActionTests {
 		game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
+		board.calcAdjacencies();
 	}
 
 	// Random choice test (no room in targets)
