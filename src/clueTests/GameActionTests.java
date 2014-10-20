@@ -25,35 +25,32 @@ public class GameActionTests {
 		board = game.getBoard();
 	}
 
-	// Random choice tests (no room in targets)
+	// Random choice test (no room in targets)
 	@Test
 	public void testTargetRandomSelection() {
-		ComputerPlayer player = new ComputerPlayer("John", "black", 16, 15);
+		ComputerPlayer player = new ComputerPlayer();
 		// Pick a location with no rooms in target, just three targets
-		board.calcTargets(16, 15, 2);
-		int loc_16_13 = 0;
-		int loc_16_17 = 0;
-		int loc_14_15 = 0;
+		board.calcTargets(9, 1, 2);
+		int loc_8_0 = 0;
+		int loc_8_2 = 0;
+		int loc_9_3 = 0;
 		// Run the test 100 times
 		for (int i=0; i<100; i++) {
-			BoardCell selected = null;
-			if (!board.getTargets().isEmpty()) {
-				selected = player.pickLocation(board.getTargets());
-			}
-			if (selected == board.getBoardCell(16, 13))
-				loc_16_13++;
-			else if (selected == board.getBoardCell(16, 17))
-				loc_16_17++;
-			else if (selected == board.getBoardCell(14, 15))
-				loc_14_15++;
+			BoardCell selected = player.pickLocation(board.getTargets());
+			if (selected == board.getBoardCell(8, 0))
+				loc_8_0++;
+			else if (selected == board.getBoardCell(8, 2))
+				loc_8_2++;
+			else if (selected == board.getBoardCell(9, 3))
+				loc_9_3++;
 			else
 				fail("Invalid target selected");
 		}
 		// Ensure we have 100 total selections (fail should also ensure)
-		assertEquals(100, loc_16_13 + loc_16_17 + loc_14_15);
+		assertEquals(100, loc_8_0 + loc_8_2 + loc_9_3);
 		// Ensure each target was selected more than once
-		assertTrue(loc_16_13 > 1);
-		assertTrue(loc_16_17 > 1);
-		assertTrue(loc_14_15 > 1);				
+		assertTrue(loc_8_0 > 1);
+		assertTrue(loc_8_2 > 1);
+		assertTrue(loc_9_3 > 1);				
 	}
 }
