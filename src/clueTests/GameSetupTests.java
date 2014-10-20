@@ -12,30 +12,31 @@ import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.Card;
 import clueGame.ClueGame;
+import clueGame.ComputerPlayer;
 import clueGame.Player;
 import clueGame.Solution;
 
 public class GameSetupTests {
-	
+
 	private static Board board;
 	private static ClueGame game;
-	
+
 	@BeforeClass
 	public static void setUp() throws FileNotFoundException, BadConfigFormatException {
 		game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
 	}
-	
+
 	@Test
 	public void testLoadingPlayers() throws FileNotFoundException {
-		
+
 		// test first line human player
 		assertEquals("Miss Scarlett", game.getPlayers().get(0).getName());
 		assertEquals(Color.black, game.getPlayers().get(0).getColor());
 		assertEquals(0, game.getPlayers().get(0).getRow());
 		assertEquals(4, game.getPlayers().get(0).getCol());
-		
+
 		//test second line computer player
 		assertEquals("Colonel Mustard", game.getPlayers().get(1).getName());
 		assertEquals(Color.blue, game.getPlayers().get(1).getColor());
@@ -48,7 +49,7 @@ public class GameSetupTests {
 		assertEquals(20, game.getPlayers().get(2).getCol());
 
 	}
-	
+
 	@Test
 	public void testLoadingCards(){
 		int people = 0, weapons =0, rooms=0;
@@ -77,19 +78,19 @@ public class GameSetupTests {
 				}
 				rooms++;
 			}
-			
-			
+
+
 		}
 		//check there are the correct number of card types
 		assertEquals(6,people);
 		assertEquals(9,rooms);
 		assertEquals(6, weapons);
-		
+
 		assertEquals(true,containsRoom && containsWeapon && containsPerson);
-		
-		
+
+
 	}
-	
+
 	@Test
 	public void testDealingCards(){
 		game.deal();
@@ -116,12 +117,12 @@ public class GameSetupTests {
 		Solution solutionWrongPerson = new Solution("Jack","Wrench","Bathroom");
 		Solution solutionWrongRoom = new Solution("John","Wrench","Livingroom");
 		Solution solutionWrong = new Solution("Jack","Knife","Hall");
-		
-		
+
+
 		game.setSolution(solution);
 		//check correct solution
 		assertTrue(game.checkAccusation(solution));
-		
+
 		//check wrong weapon
 		assertFalse(game.checkAccusation(solutionWrongWeapon));
 		//check wrong person
@@ -130,7 +131,44 @@ public class GameSetupTests {
 		assertFalse(game.checkAccusation(solutionWrongRoom));
 		//check wrong everything
 		assertFalse(game.checkAccusation(solutionWrong));
+
+	}
+	//test that one player randomly chooses between two possible cards
+	@Test
+	public void testRandomCard(){
+		Player player = new ComputerPlayer();
+		player.addCard(new Card("John",Card.CardType.PERSON));
+		player.addCard(new Card("Wrench",Card.CardType.WEAPON));
+		int pickedJohn=0;
+		int pickedWrench=0;
+		
+		
+		for(int i=0;i<100;i++){
+			Card card = player.disproveSuggestion("John", "Wrench", "Bathroom");
+			if(card.name.equalsIgnoreCase("John")){
+				pickedJohn++;
+			}
+			else if(card.name.equalsIgnoreCase("Wrench")){
+				pickedWrench++;
+			}
+			
+		}
+
+		assertEquals(100,pickedJohn+pickedWrench);
+		assertTrue(pickedJohn>20);
+		assertTrue(pickedWrench>20);
 		
 	}
 	
+	//that the player whose turn it is does not return a card.
+	@Test
+	public void testNotReturningCard(){
+		Player player = new ComputerPlayer();
+		player.addCard(new Card("Jack",Card.CardType.PERSON));
+		player.addCard(new Card("Bat",Card.CardType.WEAPON));
+		
+		Card card = player.disproveSuggestion("John", "Wrench", "Bathroom");
+		assertEquals(null,card);
+	}
+
 }
