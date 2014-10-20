@@ -51,8 +51,8 @@ public class GameSetupTests {
 	
 	@Test
 	public void testLoadingCards(){
-		int people = 0,weapons =0,rooms=0;
-		boolean containsPerson=false,containsWeapon=false,containsRoom=false;
+		int people = 0, weapons =0, rooms=0;
+		boolean containsPerson = false, containsWeapon = false, containsRoom = false;
 		assertEquals(21,game.getCards().size());
 		//get number of cards of each type
 		for(Card c: game.getCards()){
