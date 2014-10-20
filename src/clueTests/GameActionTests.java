@@ -17,7 +17,7 @@ public class GameActionTests {
 
 	private static Board board;
 	private static ClueGame game;
-	
+
 	@BeforeClass
 	public static void setUp() throws FileNotFoundException, BadConfigFormatException {
 		game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
@@ -53,5 +53,16 @@ public class GameActionTests {
 		assertTrue(loc_8_0 > 1);
 		assertTrue(loc_8_2 > 1);
 		assertTrue(loc_9_3 > 1);				
+	}
+	// Target with room in selection
+	@Test
+	public void testTargetRoom() {
+		ComputerPlayer player = new ComputerPlayer();
+		board.calcTargets(4, 20, 2);
+		assertEquals(board.getBoardCell(6,20), player.pickLocation(board.getTargets()));
+		
+		board.calcTargets(12, 7, 2);
+		assertEquals(board.getBoardCell(12,6), player.pickLocation(board.getTargets()));
+		
 	}
 }

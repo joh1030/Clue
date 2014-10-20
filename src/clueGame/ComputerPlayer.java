@@ -20,6 +20,11 @@ public class ComputerPlayer extends Player {
 		int loc = new Random().nextInt(targets.size()); 
 		int i = 0;
 		for(BoardCell cell : targets) {
+			if(cell.isDoorway()){
+				return cell;
+			}
+		}
+		for(BoardCell cell : targets) {
 		    if (i == loc)
 		        return cell;
 		    i++;
