@@ -76,6 +76,7 @@ public class GameActionTests {
 		assertNotEquals(board.getBoardCell(6,20), player.pickLocation(board.getTargets()));
 	}
 	
+	
 	//Computer player makes a suggestion
 	@Test
 	public void testComputerSuggestion() {
