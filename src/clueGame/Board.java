@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -27,6 +28,7 @@ public class Board extends JPanel {
 	private LinkedList<BoardCell> path = new LinkedList<BoardCell>();
 	private BoardCell startingPoint  = null;
 	private ArrayList<Player> players;
+	private Map<String,String> roomNames= new HashMap<String,String>();
 
 	public Board(String layoutFile) throws FileNotFoundException, BadConfigFormatException {
 		loadBoardDimensions(layoutFile);
@@ -42,6 +44,15 @@ public class Board extends JPanel {
 		}
 		for(Player p : players){
 			p.draw(g);
+		}
+		for (Entry<String, String> entry : roomNames.entrySet()) {
+			int row,col;
+		    String name = entry.getKey();
+		    String location = entry.getValue();
+		    String[] tempLine = location.split(",");
+		    col=Integer.parseInt(tempLine[0]);
+		    row=Integer.parseInt(tempLine[1]);
+		    g.drawString(name, row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH);
 		}
 		
 	}
@@ -144,12 +155,10 @@ public class Board extends JPanel {
 				temp = scan.nextLine();
 			}
 			if (!((temp.charAt(1))==',')) throw new BadConfigFormatException();
-			String[] tempLine = temp.split(",",2);
+			String[] tempLine = temp.split(",",4);
 			if (tempLine[1].contains(",")) throw new BadConfigFormatException();
 			rooms.put(tempLine[0].charAt(0), tempLine[1].trim());
-			//System.out.println("adding: " + tempLine[0].charAt(0) + " + " + tempLine[1]);
-			//System.out.println("added: " + tempLine[0] + "|" + rooms.get(tempLine[0].charAt(0)));
-
+			roomNames.put(tempLine[1], tempLine[2]+","+tempLine[3]);
 		}
 		scan.close();
 	}

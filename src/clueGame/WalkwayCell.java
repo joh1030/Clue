@@ -19,10 +19,10 @@ public class WalkwayCell extends BoardCell {
 	public void draw(Graphics g, Board board){
 		//fill rect
 		g.setColor(squareColor);
-		g.fillRect(this.getRow()*ClueGame.SQUARE_LENGTH, this.getColumn()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
+		g.fillRect(this.getColumn()*ClueGame.SQUARE_LENGTH,this.getRow()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
 		//draw rect
 		g.setColor(squareOutline);
-		g.drawRect(this.getRow()*ClueGame.SQUARE_LENGTH, this.getColumn()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
+		g.drawRect(this.getColumn()*ClueGame.SQUARE_LENGTH,this.getRow()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
 		
 		
 	}

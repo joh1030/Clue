@@ -10,6 +10,7 @@ public class RoomCell extends BoardCell {
 	private DoorDirection doorDirection;
 	private char roomInitial;
 	private Color squareColor = Color.GRAY;
+	private Color doorColor = Color.BLUE;
 	
 	//constructor for rooms with door
 	public RoomCell(int R, int C, Character roomInit, Character dir) {
@@ -64,8 +65,24 @@ public class RoomCell extends BoardCell {
 	public void draw(Graphics g, Board board){
 		//fill rect
 		g.setColor(squareColor);
-		g.fillRect(this.getRow()*ClueGame.SQUARE_LENGTH, this.getColumn()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
+		g.fillRect(this.getColumn()*ClueGame.SQUARE_LENGTH, this.getRow()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
 		
-		
+		if(this.isDoorway()){
+			g.setColor(doorColor);
+			switch(doorDirection){
+			case UP:
+				g.fillRect(this.getColumn()*ClueGame.SQUARE_LENGTH, this.getRow()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH/4);
+				break;
+			case DOWN:
+				g.fillRect(this.getColumn()*ClueGame.SQUARE_LENGTH, this.getRow()*ClueGame.SQUARE_LENGTH+ClueGame.SQUARE_LENGTH-(ClueGame.SQUARE_LENGTH/4),  ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH/4);
+				break;
+			case LEFT:
+				g.fillRect(this.getColumn()*ClueGame.SQUARE_LENGTH, this.getRow()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH/4, ClueGame.SQUARE_LENGTH);
+				break;
+			case RIGHT:
+				g.fillRect(this.getColumn()*ClueGame.SQUARE_LENGTH+ClueGame.SQUARE_LENGTH-(ClueGame.SQUARE_LENGTH/4), this.getRow()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH/4, ClueGame.SQUARE_LENGTH);
+				break;
+			}
+		}
 	}
 }
