@@ -1,8 +1,20 @@
 package clueGame;
 
+import java.awt.Graphics;
+
 public abstract class BoardCell {
 	private int row;
 	private int column;
+	
+	
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+	
 	
 	@Override
 	public String toString() {
@@ -14,6 +26,8 @@ public abstract class BoardCell {
 		column = C;
 		
 	}
+	
+	public abstract void draw(Graphics g,Board board);
 	
 	public boolean isWalkway() {
 		return false;
@@ -27,6 +41,4 @@ public abstract class BoardCell {
 		return false;
 	}
 	
-	/*public void draw() {
-	}*/
 }

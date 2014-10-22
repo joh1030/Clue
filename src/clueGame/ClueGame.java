@@ -1,5 +1,8 @@
 package clueGame;
 
+
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,7 +13,10 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
 
-public class ClueGame {
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class ClueGame extends JFrame{
 	private ArrayList<Card> cards = new ArrayList<Card>();
 	private ArrayList<Card> peopleCards = new ArrayList<Card>();
 	private ArrayList<Card> weaponCards = new ArrayList<Card>();
@@ -25,29 +31,31 @@ public class ClueGame {
 
 	private String playersFile;
 	private String weaponsFile;
+	
+	public static final int SQUARE_LENGTH=20;
 
 	private Map<Character,String> rooms = new HashMap<Character,String>();
-	public ClueGame(String layout, String legend) {
-		layoutFile = layout;
-		legendFile = legend;
-		playersFile="players.txt";
-		weaponsFile="weapons.txt";
-		try {
-			board = new Board(layoutFile);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadConfigFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
+	
+	private void createLayout() {
+		
+		add(board,BorderLayout.CENTER);
+		
 	}
+	
+	public static void main(String[] args) {
+		ClueGame game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
+		game.setVisible(true);
+	}
+	
+	
 
 	public ClueGame(String layout, String legend, String players, String weapons) {
 		layoutFile = layout;
 		legendFile = legend;
 		playersFile=players;
 		weaponsFile=weapons;
+		
 		try {
 			board = new Board(layoutFile);
 		} catch (FileNotFoundException e) {
@@ -57,6 +65,24 @@ public class ClueGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		try {
+			loadConfigFiles();
+		} catch (FileNotFoundException | BadConfigFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		
+		board.setPlayers(this.players);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(board.getNumRows()*SQUARE_LENGTH, board.getNumColumns()*SQUARE_LENGTH);
+		setTitle("CLUE");
+		createLayout();
+	}
+	public ClueGame(String layout, String legend) {
+		this(layout,legend,"players.txt","weapons.txt");
 	}
 
 	public void loadConfigFiles() throws FileNotFoundException, BadConfigFormatException {

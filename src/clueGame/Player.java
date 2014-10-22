@@ -1,24 +1,28 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.util.*;
 
 public class Player {
-	
+
 	private ArrayList<Card> myCards = new ArrayList<Card>();
-	
+
 	private String name;
 	private Color color;
+	private Color borderColor = Color.black;
 	private int row, col;
-	
+
+
 	public Player() {
 		name = "";
 		color = Color.black;
 		row = 0;
 		col = 0;
 	}
-	
+
+
 	public Player(String name, String color, int row, int col) {
 		this.name = name;
 		// convert String color to Color color
@@ -32,7 +36,7 @@ public class Player {
 		this.row = row;
 		this.col = col;
 	}
-	
+
 	public void addCard(Card card){
 		myCards.add(card);
 	}
@@ -56,7 +60,7 @@ public class Player {
 	public int getCol() {
 		return col;
 	}
-	
+
 	public Card disproveSuggestion(String person, String weapon, String room) {
 		ArrayList<Card> tempCards = new ArrayList<Card>();
 		for(Card c: myCards){
@@ -71,5 +75,14 @@ public class Player {
 		}
 		return null;
 	}
-	
+
+	public void draw(Graphics g){
+
+		g.setColor(color);
+		g.fillOval(row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
+
+		g.setColor(borderColor);
+		g.drawOval(row*ClueGame.SQUARE_LENGTH, col*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
+	}
+
 }

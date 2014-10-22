@@ -1,11 +1,16 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class RoomCell extends BoardCell {
 	public enum DoorDirection {
 		UP, DOWN, LEFT, RIGHT, NONE
 	}
 	private DoorDirection doorDirection;
 	private char roomInitial;
+	private Color squareColor = Color.GRAY;
+	
 	//constructor for rooms with door
 	public RoomCell(int R, int C, Character roomInit, Character dir) {
 		super(R, C);
@@ -55,6 +60,12 @@ public class RoomCell extends BoardCell {
 		return doorDirection;
 	}
 	
-	/*public void draw() {
-	}*/
+	@Override
+	public void draw(Graphics g, Board board){
+		//fill rect
+		g.setColor(squareColor);
+		g.fillRect(this.getRow()*ClueGame.SQUARE_LENGTH, this.getColumn()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
+		
+		
+	}
 }

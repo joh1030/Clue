@@ -1,7 +1,10 @@
 package clueGame;
 
+import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -9,9 +12,11 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JPanel;
+
 import clueGame.RoomCell.DoorDirection;
 
-public class Board {
+public class Board extends JPanel {
 	private BoardCell[][] layout;
 	private Map<Character,String> rooms = new HashMap<Character,String>();
 	private int numRows;
@@ -21,10 +26,24 @@ public class Board {
 	private Set<BoardCell> visited = new HashSet<BoardCell>();
 	private LinkedList<BoardCell> path = new LinkedList<BoardCell>();
 	private BoardCell startingPoint  = null;
+	private ArrayList<Player> players;
 
 	public Board(String layoutFile) throws FileNotFoundException, BadConfigFormatException {
 		loadBoardDimensions(layoutFile);
 		layout = new BoardCell[numRows][numColumns];
+	}
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for(int i = 0; i < numRows; i++) {
+			for(int j = 0; j < numColumns; j++) {
+				layout[i][j].draw(g,this);
+			}
+		}
+		for(Player p : players){
+			p.draw(g);
+		}
+		
 	}
 
 	public void loadBoardDimensions(String layoutFile) throws BadConfigFormatException, FileNotFoundException {
@@ -238,5 +257,8 @@ public class Board {
 
 	public RoomCell getRoomCell(int row, int col) {
 		return (RoomCell) layout[row][col];
+	}
+	public void setPlayers(ArrayList<Player> player){
+		players=player;
 	}
 }
