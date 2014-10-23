@@ -1,7 +1,5 @@
 package clueGame;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -31,32 +29,29 @@ public class ClueGame extends JFrame{
 
 	private String playersFile;
 	private String weaponsFile;
-	
+
 	public static final int SQUARE_LENGTH=30;
 
 	private Map<Character,String> rooms = new HashMap<Character,String>();
-	
-	
+
+
 	private void createLayout() {
-		
 		add(board,BorderLayout.CENTER);
 		DetectiveNotes notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
 		notes.setVisible(true);
 	}
-	
+
 	public static void main(String[] args) {
 		ClueGame game = new ClueGame("ClueLayout.csv","ClueLegend.csv","players.txt","weapons.txt");
 		game.setVisible(true);
 	}
-	
-	
 
 	public ClueGame(String layout, String legend, String players, String weapons) {
 		layoutFile = layout;
 		legendFile = legend;
 		playersFile=players;
 		weaponsFile=weapons;
-		
+
 		try {
 			board = new Board(layoutFile);
 		} catch (FileNotFoundException e) {
@@ -66,7 +61,7 @@ public class ClueGame extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		try {
 			loadConfigFiles();
 		} catch (FileNotFoundException | BadConfigFormatException e) {
@@ -74,8 +69,8 @@ public class ClueGame extends JFrame{
 			e.printStackTrace();
 		}
 		System.out.println(board.getNumRows());
-	
-		
+
+
 		board.setPlayers(this.players);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize((board.getNumRows()+1)*SQUARE_LENGTH, (board.getNumColumns()+2)*SQUARE_LENGTH);
