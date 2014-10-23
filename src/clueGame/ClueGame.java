@@ -40,7 +40,8 @@ public class ClueGame extends JFrame{
 	private void createLayout() {
 		
 		add(board,BorderLayout.CENTER);
-		
+		DetectiveNotes notes = new DetectiveNotes(peopleCards,roomCards,weaponCards);
+		notes.setVisible(true);
 	}
 	
 	public static void main(String[] args) {
