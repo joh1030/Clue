@@ -32,7 +32,7 @@ public class ClueGame extends JFrame{
 	private String playersFile;
 	private String weaponsFile;
 	
-	public static final int SQUARE_LENGTH=20;
+	public static final int SQUARE_LENGTH=30;
 
 	private Map<Character,String> rooms = new HashMap<Character,String>();
 	
@@ -72,13 +72,13 @@ public class ClueGame extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println(board.getNumRows());
 	
 		
 		board.setPlayers(this.players);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(board.getNumRows()*SQUARE_LENGTH, board.getNumColumns()*SQUARE_LENGTH);
-		setTitle("CLUE");
+		setSize((board.getNumRows()+1)*SQUARE_LENGTH, (board.getNumColumns()+2)*SQUARE_LENGTH);
+		setTitle("Clue Game");
 		createLayout();
 	}
 	public ClueGame(String layout, String legend) {
