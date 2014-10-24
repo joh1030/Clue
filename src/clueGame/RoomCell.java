@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class RoomCell extends BoardCell {
+	
 	public enum DoorDirection {
 		UP, DOWN, LEFT, RIGHT, NONE
 	}
+	
 	private DoorDirection doorDirection;
 	private char roomInitial;
-	private Color squareColor = Color.GRAY;
+	private Color roomColor = Color.GRAY;
 	private Color doorColor = Color.BLUE;
 	
 	//constructor for rooms with door
@@ -63,10 +65,10 @@ public class RoomCell extends BoardCell {
 	
 	@Override
 	public void draw(Graphics g, Board board){
-		//fill rect
-		g.setColor(squareColor);
+		// fill rooms
+		g.setColor(roomColor);
 		g.fillRect(this.getColumn()*ClueGame.SQUARE_LENGTH, this.getRow()*ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH, ClueGame.SQUARE_LENGTH);
-		
+		// fill doorways
 		if(this.isDoorway()){
 			g.setColor(doorColor);
 			switch(doorDirection){

@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ClueGame extends JFrame{
+	
+	private Map<Character,String> rooms = new HashMap<Character,String>();
 	private ArrayList<Card> cards = new ArrayList<Card>();
 	private ArrayList<Card> peopleCards = new ArrayList<Card>();
 	private ArrayList<Card> weaponCards = new ArrayList<Card>();
@@ -26,14 +28,10 @@ public class ClueGame extends JFrame{
 	private int boardCols;
 	private String layoutFile;
 	private String legendFile;
-
 	private String playersFile;
 	private String weaponsFile;
 
-	public static final int SQUARE_LENGTH=30;
-
-	private Map<Character,String> rooms = new HashMap<Character,String>();
-
+	public static final int SQUARE_LENGTH = 30;
 
 	private void createLayout() {
 		add(board,BorderLayout.CENTER);
@@ -55,21 +53,17 @@ public class ClueGame extends JFrame{
 		try {
 			board = new Board(layoutFile);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (BadConfigFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		try {
 			loadConfigFiles();
 		} catch (FileNotFoundException | BadConfigFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(board.getNumRows());
-
 
 		board.setPlayers(this.players);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,6 +71,7 @@ public class ClueGame extends JFrame{
 		setTitle("Clue Game");
 		createLayout();
 	}
+	
 	public ClueGame(String layout, String legend) {
 		this(layout,legend,"players.txt","weapons.txt");
 	}

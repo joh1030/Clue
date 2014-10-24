@@ -8,16 +8,16 @@ import javax.swing.*;
 
 public class DetectiveNotes extends JDialog {
 
-	public ArrayList<Card> peopleCards = new ArrayList<Card>();
-	public ArrayList<Card> roomsCards = new ArrayList<Card>();
-	public ArrayList<Card> weaponsCards = new ArrayList<Card>();
+	public ArrayList<Card> peopleCards;
+	public ArrayList<Card> roomsCards;
+	public ArrayList<Card> weaponsCards;
 
-	public DetectiveNotes(ArrayList<Card> people,ArrayList<Card> rooms,ArrayList<Card> weapons) {
+	public DetectiveNotes(ArrayList<Card> people, ArrayList<Card> rooms, ArrayList<Card> weapons) {
 		setSize(400, 500);
 		setTitle("Detective Notes");
-		peopleCards=people;
-		roomsCards=rooms;
-		weaponsCards=weapons;
+		peopleCards = people;
+		roomsCards = rooms;
+		weaponsCards = weapons;
 		createLayout();
 	}
 

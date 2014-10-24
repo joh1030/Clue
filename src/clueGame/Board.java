@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import clueGame.RoomCell.DoorDirection;
 
 public class Board extends JPanel {
+	
 	private BoardCell[][] layout;
 	private Map<Character,String> rooms = new HashMap<Character,String>();
 	private int numRows;
@@ -34,6 +35,7 @@ public class Board extends JPanel {
 		loadBoardDimensions(layoutFile);
 		layout = new BoardCell[numRows][numColumns];
 	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -45,6 +47,7 @@ public class Board extends JPanel {
 		for(Player p : players){
 			p.draw(g);
 		}
+		// add room names on the board gui
 		for (Entry<String, String> entry : roomNames.entrySet()) {
 			int row,col;
 		    String name = entry.getKey();
